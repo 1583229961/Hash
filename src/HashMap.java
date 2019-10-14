@@ -1,25 +1,27 @@
-public class HashMap {}
+public class HashMap {public void name() {
+	
+}}
 
-//HashMapÔ´Âë½âÎö
+//HashMapæºç è§£æ
 
-public class HashMap<K,V> extends AbstractMap<K,V>//ÊµÏÖÁËĞòÁĞ»¯,¿ËÂ¡½Ó¿Ú
+public class HashMap<K,V> extends AbstractMap<K,V>//å®ç°äº†åºåˆ—åŒ–,å…‹éš†æ¥å£
     implements Map<K,V>, Cloneable, Serializable {
 
-    private static final long serialVersionUID = 362498820763181265L;//ĞòÁĞ»¯µÄĞòÁĞºÅ
+    private static final long serialVersionUID = 362498820763181265L;//åºåˆ—åŒ–çš„åºåˆ—å·
 
-	static final int DEFAULT_INITIAL_CAPACITY = 1 << 4; //¶¨ÒåÄ¬ÈÏµÄHashMapÈİÁ¿
-	 static final int MAXIMUM_CAPACITY = 1 << 30;//¶¨Òå×î´óHashMapÈİÁ¿
-	static final float DEFAULT_LOAD_FACTOR = 0.75f;//¶¨ÒåÒò×Ó,µ±ĞèÒª½øĞĞMapÀ©ÈİÊ±ºòÊ¹ÓÃ
-	static final int TREEIFY_THRESHOLD = 8;//Í°½ÚµãµÄÁ´±í³¤¶È´óÓÚ8Ê±×ª»¯ÎªºìºÚÊ÷
-	 static final int UNTREEIFY_THRESHOLD = 6;//Í°½ÚµãµÄÁ´±í³¤¶ÈĞ¡ÓÚ6Ê±×ª»¯ÎªÁ´±í
-	 static final int MIN_TREEIFY_CAPACITY = 64;//Õû¸öHashmapÔªËØ³¬¹ı64Ê±Ò²»á×ª»¯ÎªºìºÚÊ÷
+	static final int DEFAULT_INITIAL_CAPACITY = 1 << 4; //å®šä¹‰é»˜è®¤çš„HashMapå®¹é‡
+	 static final int MAXIMUM_CAPACITY = 1 << 30;//å®šä¹‰æœ€å¤§HashMapå®¹é‡
+	static final float DEFAULT_LOAD_FACTOR = 0.75f//å®šä¹‰å› å­,å½“éœ€è¦è¿›è¡ŒMapæ‰©å®¹æ—¶å€™ä½¿ç”¨
+	static final int TREEIFY_THRESHOLD = 8//æ¡¶èŠ‚ç‚¹çš„é“¾è¡¨é•¿åº¦å¤§äº8æ—¶è½¬åŒ–ä¸ºçº¢é»‘æ ‘
+	 static final int UNTREEIFY_THRESHOLD = 6//æ¡¶èŠ‚ç‚¹çš„é“¾è¡¨é•¿åº¦å°äº6æ—¶è½¬åŒ–ä¸ºé“¾è¡¨
+	 static final int MIN_TREEIFY_CAPACITY = 64//æ•´ä¸ªHashmapå…ƒç´ è¶…è¿‡64æ—¶ä¹Ÿä¼šè½¬åŒ–ä¸ºçº¢é»‘æ ‘
 	 
-	 /****************³£ÓÃµÄÄÚ²¿Àà**************/
+	 /****************å¸¸ç”¨çš„å†…éƒ¨ç±»**************/
     static class Node<K,V> implements Map.Entry<K,V> {
         final int hash;
         final K key;
         V value;
-        Node<K,V> next;					//¶¨ÒåÒ»¸ö½ÚµãÀà,ÓëÊı×é×é³Éhash½á¹¹
+        Node<K,V> next;					//å®šä¹‰ä¸€ä¸ªèŠ‚ç‚¹ç±»,ä¸æ•°ç»„ç»„æˆhashç»“æ„
 		
         Node(int hash, K key, V value, Node<K,V> next) {
             this.hash = hash;
@@ -27,7 +29,7 @@ public class HashMap<K,V> extends AbstractMap<K,V>//ÊµÏÖÁËĞòÁĞ»¯,¿ËÂ¡½Ó¿Ú
             this.value = value;
             this.next = next;
         }
-	//¶¨ÒåºìºÚÊ÷µÄ½á¹¹
+	//å®šä¹‰çº¢é»‘æ ‘çš„ç»“æ„
 	static final class TreeNode<K,V> extends LinkedHashMap.Entry<K,V> {
         TreeNode<K,V> parent;  // red-black tree links
         TreeNode<K,V> left;
@@ -49,22 +51,22 @@ public class HashMap<K,V> extends AbstractMap<K,V>//ÊµÏÖÁËĞòÁĞ»¯,¿ËÂ¡½Ó¿Ú
             }
         }
 
- /****************¹¹Ôìº¯Êı**************/
- public HashMap() {//Ê¹ÓÃÄ¬ÈÏµÄ¼ÓÔØÒò×Ó0.75
+ /****************æ„é€ å‡½æ•°**************/
+ public HashMap() {//ä½¿ç”¨é»˜è®¤çš„åŠ è½½å› å­0.75
         this.loadFactor = DEFAULT_LOAD_FACTOR; // all other fields defaulted
     }
 
-public HashMap(int initialCapacity) {//ÉèÖÃ³õÊ¼»¯ÈİÁ¿,Ä¬ÈÏ¼ÓÔØÒò×Ó,ÆäÖĞÒ²µ÷ÓÃÁËµÚÈı¸ö¹¹Ôìº¯Êı
+public HashMap(int initialCapacity) {//è®¾ç½®åˆå§‹åŒ–å®¹é‡,é»˜è®¤åŠ è½½å› å­,å…¶ä¸­ä¹Ÿè°ƒç”¨äº†ç¬¬ä¸‰ä¸ªæ„é€ å‡½æ•°
         this(initialCapacity, DEFAULT_LOAD_FACTOR);
     }
 	
-	public HashMap(int initialCapacity, float loadFactor) {//ÉèÖÃ³õÊ¼»¯ÈİÁ¿,¼ÓÔØ×Ô¶¨Òå¼ÓÔØÒò×Ó
-        if (initialCapacity < 0)//ÅĞ¶ÏÈİÁ¿
+	public HashMap(int initialCapacity, float loadFactor) {//è®¾ç½®åˆå§‹åŒ–å®¹é‡,åŠ è½½è‡ªå®šä¹‰åŠ è½½å› å­
+        if (initialCapacity < 0)
             throw new IllegalArgumentException("Illegal initial capacity: " +
                                                initialCapacity);
         if (initialCapacity > MAXIMUM_CAPACITY)
             initialCapacity = MAXIMUM_CAPACITY;
-        if (loadFactor <= 0 || Float.isNaN(loadFactor))//ÅĞ¶Ï¼ÓÔØÒò×Ó
+        if (loadFactor <= 0 || Float.isNaN(loadFactor))
             throw new IllegalArgumentException("Illegal load factor: " +
                                                loadFactor);
         this.loadFactor = loadFactor;
